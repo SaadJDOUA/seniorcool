@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#eef4fa">
+<meta name="description" content="SENIORCOOL 5 kW: interaktives 3D-Modell mit Bauteilen, technischen Daten und Budget für das Projekt Bremen."><title>SENIORCOOL 5 kW — Projekt Bremen</title>
+<link rel="stylesheet" href="./style.css"><script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script>
+<link rel="stylesheet" href="./bremen.css?v=studio-film">
+</head>
+<body>
+<main class="viewer" id="viewer" aria-label="Interaktives SENIORCOOL-3D-Modell">
+<div id="canvasHost"><div class="loading" id="loading"><span class="spinner"></span>3D-Modell wird geladen …</div></div>
+<header class="project-heading">
+  <h1>SENIORCOOL <span>5 kW</span></h1>
+  <p>Projekt Bremen · Aufenthaltsraum ca. 50 m²</p>
+  <div class="project-actions">
+    <button class="project-button" id="projectBtn" aria-haspopup="dialog">Technische Daten &amp; Kosten</button>
+    <button class="project-button film-button" id="filmBtn" aria-haspopup="dialog"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 3 8 5-8 5Z"/></svg>3D-Produktfilm</button>
+  </div>
+</header>
+<details class="inspector" id="inspector">
+<summary><svg viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg>Bauteile & Einstellungen<span class="chevron">⌄</span></summary>
+<div class="panel-content">
+<div class="component-heading"><h2>Bauteile</h2><button id="labelsBtn" aria-pressed="true">Markierungen <span class="mini-toggle"></span></button></div>
+<div class="component-detail" id="componentDetail" aria-live="polite" hidden></div>
+<div class="component-list" id="componentList"></div>
+<div class="control-block">
+<div class="toggle-row"><label for="flowBtn">Wasserkreislauf animieren</label><button id="flowBtn" class="switch on" role="switch" aria-checked="true" aria-label="Wasserkreislauf animieren"><span></span></button></div>
+<div class="flow-legend"><span><i class="cold"></i>Kaltes Wasser</span><span><i class="warm"></i>Erwärmter Rücklauf</span></div>
+<div class="opacity-header"><label for="opacity">Gehäusetransparenz</label><output id="opacityValue">0 %</output></div>
+<input id="opacity" type="range" min="0" max="90" value="0" step="1" aria-label="Gehäusetransparenz">
+</div>
+<button class="inside-button" id="insideBtn"><span>Innenraum erkunden</span><svg viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+<a class="download-button" id="downloadBtn" href="./assets/seniorcool.glb?v=studio" download="SENIORCOOL-5kW-Bremen.glb"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>3D-Modell herunterladen <span>.GLB</span></a>
+</div>
+</details>
+<div class="view-tools">
+<button id="resetBtn" title="Ansicht zurücksetzen" aria-label="Ansicht zurücksetzen"><svg viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg></button>
+<button id="rotateBtn" title="Automatisch drehen" aria-label="Automatisch drehen" aria-pressed="false"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="9" ry="5"/><path d="m16 3 4 4-4 4M12 3h8v4"/></svg></button>
+<button id="fullscreenBtn" title="Vollbild" aria-label="Vollbild"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/></svg></button>
+</div>
+<div id="hotspots" aria-label="Bauteilmarkierungen"></div>
+<div class="bottom-controls"><div class="mode-switch" role="group" aria-label="Ansicht">
+<button data-mode="exterior" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="m12 3 8 4v10l-8 4-8-4V7l8-4Zm0 0v18M4 7l8 4 8-4"/></svg>Außen</button>
+<button data-mode="cutaway" class="active" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="m12 3 8 4v10l-8 4-8-4V7l8-4Zm0 8v10M4 7l8 4 8-4M12 3v5" stroke-dasharray="3 2"/></svg>Innen</button>
+<button data-mode="exploded" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="m12 2 9 4-9 4-9-4 9-4ZM3 12l9 4 9-4M3 18l9 4 9-4"/></svg>Explosionsansicht</button>
+</div></div>
+<dialog id="projectDialog" aria-labelledby="projectTitle">
+  <header class="sheet-header">
+    <div>
+      <p>Projekt Bremen · Budgetschätzung 2026</p>
+      <h2 id="projectTitle">SENIORCOOL 5 kW</h2>
+    </div>
+    <form method="dialog"><button class="close-sheet" aria-label="Schließen" autofocus>×</button></form>
+  </header>
+  <div class="sheet-content">
+    <p class="project-purpose">Mobiler Hitzeschutz für Pflegeeinrichtungen</p>
+    <section aria-labelledby="specTitle">
+      <h3 id="specTitle">Technische Eckdaten</h3>
+      <dl class="spec-grid">
+        <div><dt>Kühlleistung</dt><dd>5 kW</dd></div>
+        <div><dt>Einsatzbereich</dt><dd>ca. 50 m²</dd></div>
+        <div><dt>Luftdurchsatz</dt><dd>1.500–1.850 m³/h</dd></div>
+        <div><dt>Vorlauf / Rücklauf</dt><dd>ca. 7 °C / 12 °C</dd></div>
+        <div><dt>Leistungsaufnahme</dt><dd>ca. 1,9–2,4 kW</dd></div>
+        <div><dt>Wassertank (extern)</dt><dd>20 Liter</dd></div>
+        <div><dt>Geräuschpegel</dt><dd>ca. 28–40 dB</dd></div>
+      </dl>
+      <p class="sheet-note">Auslegungsziel für die Raumtemperatur beispielsweise 20–24 °C. Die 3D-Darstellung zeigt das Konzept mit geschätzten Proportionen.</p>
+    </section>
+    <section aria-labelledby="partsTitle">
+      <h3 id="partsTitle">Bauteile und Einzelpreise</h3>
+      <table class="parts-table">
+        <thead><tr><th scope="col">Bauteil und Funktion</th><th scope="col">Preis (ca.)</th></tr></thead>
+        <tbody id="priceRows"></tbody>
+        <tfoot><tr><th scope="row">Gesamtkosten Bauteile</th><td id="partsTotal"></td></tr></tfoot>
+      </table>
+    </section>
+    <section aria-labelledby="installationTitle">
+      <h3 id="installationTitle">Zusatzkosten bis zur Inbetriebnahme</h3>
+      <dl class="cost-list" id="installationCosts"></dl>
+      <div class="budget-total"><strong>Gesamtkosten für ein Gerät</strong><strong id="projectTotal"></strong></div>
+    </section>
+  </div>
+</dialog>
+<dialog id="filmDialog" aria-labelledby="filmTitle">
+  <header class="film-header">
+    <h2 id="filmTitle">SENIORCOOL · 3D-Produktfilm</h2>
+    <form method="dialog"><button class="close-sheet" aria-label="Schließen" autofocus>×</button></form>
+  </header>
+  <div class="film-player">
+    <video id="productFilm" controls playsinline preload="none" poster="./assets/seniorcool-film.jpg">
+      <track kind="captions" src="./assets/seniorcool-de.vtt" srclang="de" label="Deutsch">
+      Ihr Browser unterstützt das Videoformat nicht.
+    </video>
+    <p id="filmStatus" role="status" hidden></p>
+  </div>
+  <footer class="film-footer"><a href="./assets/seniorcool-werbefilm-de.mp4" download="SENIORCOOL-3D-Werbefilm-DE.mp4">MP4 herunterladen <span aria-hidden="true">↓</span></a></footer>
+</dialog>
+</main><div id="toast" role="status"></div><script type="module" src="./app.js?v=studio-film"></script>
+</body></html>
